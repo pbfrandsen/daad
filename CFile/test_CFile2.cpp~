@@ -1,0 +1,56 @@
+#include "CFile2.h"
+#include <iostream>
+
+using namespace std;
+
+void copy_by_char()
+{
+  CFile file;
+  char  c;
+
+  file.ffopen("dat.txt");
+
+  c = file.getchar();
+  //  cerr << (int)file.status();
+  while (!file.eof())
+  {
+    cout << c;
+    c = file.getchar();
+    //    cerr << (int)file.status() << endl;
+    //    cerr << file.line() << endl;
+  }
+
+  file.ffclose();
+}
+
+
+void copy_by_line()
+{
+  CFile file;
+  char  str[200];
+
+  file.ffopen("dat.txt");
+
+  //  cerr << file.line() << endl;
+  file.getline(str, 200);
+  // cerr << (int)file.status();
+  cerr << file.line() << endl;
+  while (!file.eof())
+  {
+    cout << str << endl;
+
+    file.getline(str, 200);
+    //    cerr << (int)file.status() << endl;
+    cerr << file.line() << endl;
+  }
+
+  file.ffclose();
+}
+
+
+int main()
+{
+
+  copy_by_char();
+
+}

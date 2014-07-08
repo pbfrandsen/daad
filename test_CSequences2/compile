@@ -1,0 +1,13 @@
+#g++ -I .. fasta2phylip.cpp  -o fasta2phylip
+# g++ -I .. fasta2nexus.cpp   -o fasta2nexus
+
+#g++ -I.. test-seq-distances.cpp -o test-seq-distances
+
+## Test fasta and phylip reading
+# g++ -I .. main.cpp
+
+## g++ -g3 -ggdb -I .. read-phylip.cpp -o read-phylip
+
+g++ -g3 -ggdb -I .. phylip2nexus.cpp -o phylip2nexus
+g++ -g3 -ggdb -I .. phylip2fasta.cpp -o phylip2fasta
+

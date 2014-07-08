@@ -1,0 +1,47 @@
+echo Test test_too_many_residues_interleaved.phy
+a.out phy test_too_many_residues_interleaved.phy
+echo
+
+echo Test test_too_few_residues_interleaved.phy
+a.out phy test_too_few_residues_interleaved.phy
+echo
+
+echo Test test_too_many_residues_sequential.phy
+a.out phy test_too_many_residues_sequential.phy
+echo
+
+echo Test test_too_few_residues_sequential.phy
+a.out phy test_too_few_residues_sequential.phy
+echo
+
+echo Test test_missing_blank_line_after_second_block.phy
+a.out phy test_missing_blank_line_after_second_block.phy
+echo
+
+echo Test test_missing_blank_line_after_first_block.phy
+a.out phy test_missing_blank_line_after_first_block.phy
+echo
+
+echo Test test_too_many_taxa_in_second_block_interleaved.phy
+a.out phy test_too_many_taxa_in_second_block_interleaved.phy
+echo
+
+echo Test test_too_many_taxa_in_first_block_interleaved.phy
+a.out phy test_too_many_taxa_in_first_block_interleaved.phy
+echo
+
+echo Test test_correct_format_sequential.phy
+a.out phy test_correct_format_sequential.phy
+echo
+
+echo Test test_correct_format_interleaved.phy
+a.out phy test_correct_format_interleaved.phy
+echo
+
+echo Test test_different_length_of_sequences_interleaved.phy
+a.out phy test_different_length_of_sequences_interleaved.phy
+echo
+
+echo Test test_guess_dimensions_of_sequences_interleaved.phy
+a.out phy test_guess_dimensions_of_sequences_interleaved.phy
+echo
