@@ -9,6 +9,7 @@
 #include <iostream>
 #include "../CSequences2.h"
 #include "../faststring2.h"
+#include "../site_pattern.h"
 #include "../Cfile/CFile2_1.h"
 
 using namespace std;
@@ -43,7 +44,6 @@ CSequences2 read_fasta_file(int type, const char *fn )
     return *seqs;
 }
 
-//get_alignment_pattern_splits
 
 int main(int argc, const char ** argv)
 {
@@ -64,18 +64,26 @@ int main(int argc, const char ** argv)
     {
         CSequences2 sequences = read_fasta_file(1, filename.c_str());
         vector<faststring> seq_patterns;
+        vector<SitePattern> all_patterns;
+
         seq_patterns = sequences.get_pattern_vec();
-        int i;
-        for (i = 0; i < 50; ++i)
-        {
-            cout << seq_patterns[i] << endl;
-        }
+        
+        SitePattern first(seq_patterns[0]);
+        first.print(cout);
+        cout << endl;
+        
+//        int i;
+//        for (i = 0; i < 50; ++i)
+//        {
+//            cout << seq_patterns[i] << endl;
+//        }
     }
     else if (data_type == "protein")
         CSequences2 sequences = read_fasta_file(2, filename.c_str());
     else
     {
         cerr << "Unknown data type: " << data_type << ". Please enter either dna or protein." << endl;
+        return 0;
     }
     
     
