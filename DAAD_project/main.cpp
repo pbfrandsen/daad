@@ -88,6 +88,7 @@ int main(int argc, const char ** argv)
         map<char, vector <int> > site_partition = temp.gen_pattern_partition();
         
         int i;
+        int j;
         
         for (i = 0; i < alignment_length; ++i)
         {
@@ -99,30 +100,43 @@ int main(int argc, const char ** argv)
             site_partition = temp.gen_pattern_partition();
             all_patterns.push_back(temp);
             
-            
-//            cout << "Here are your A's:" << endl;
-//            copy(site_partition['A'].begin(), site_partition['A'].end(), ostream_iterator<int>(cout, " "));
-//            cout << endl;
-//            
-//            cout << "Here are your C's:" << endl;
-//            copy(site_partition['C'].begin(), site_partition['C'].end(), ostream_iterator<int>(cout, " "));
-//            cout << endl;
-//            
-//            cout << "Here are your G's:" << endl;
-//            copy(site_partition['G'].begin(), site_partition['G'].end(), ostream_iterator<int>(cout, " "));
-//            cout << endl;
-//            
-//            cout << "Here are your T's:" << endl;
-//            copy(site_partition['T'].begin(), site_partition['T'].end(), ostream_iterator<int>(cout, " "));
-//            cout << endl << endl;
+//            if (i < 3)
+//            {
+//                cout << "Here are your A's:" << endl;
+//                copy(site_partition['A'].begin(), site_partition['A'].end(), ostream_iterator<int>(cout, " "));
+//                cout << endl;
+//                
+//                cout << "Here are your C's:" << endl;
+//                copy(site_partition['C'].begin(), site_partition['C'].end(), ostream_iterator<int>(cout, " "));
+//                cout << endl;
+//                
+//                cout << "Here are your G's:" << endl;
+//                copy(site_partition['G'].begin(), site_partition['G'].end(), ostream_iterator<int>(cout, " "));
+//                cout << endl;
+//                
+//                cout << "Here are your T's:" << endl;
+//                copy(site_partition['T'].begin(), site_partition['T'].end(), ostream_iterator<int>(cout, " "));
+//                cout << endl << endl;
+//            }
         }
         
-        vector<double> pattern_pas;
-        for (i = 0; i < 2; ++i)
+        double axpi_sum;
+        vector<double> pattern_pa_s;
+        for (i = 0; i < alignment_length; ++i)
         {
-            pattern_pas.push_back(all_patterns[i].calculate_axpi(all_patterns[i+1]));
+            axpi_sum = 0;
+            for (j = 0; j < alignment_length; ++j)
+            {
+                if (i == j)
+                    continue;
+                else
+                {
+                    axpi_sum += all_patterns[i].calculate_axpi(all_patterns[j]);
+                }
+            }
+            pattern_pa_s.push_back(axpi_sum/(alignment_length - 1));
         }
-        copy(pattern_pas.begin(), pattern_pas.end(), ostream_iterator<double>(cout, " "));
+        copy(pattern_pa_s.begin(), pattern_pa_s.end(), ostream_iterator<double>(cout, "\n"));
         cout << endl;
         
     }
