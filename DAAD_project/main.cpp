@@ -77,33 +77,54 @@ int main(int argc, const char ** argv)
         temp.print(cout);
         cout << endl;
         
+        temp.reset_pattern(seq_patterns[1]);
+        temp.print(cout);
+        cout << endl;
+        
+        temp.reset_pattern(seq_patterns[2]);
+        temp.print(cout);
+        cout << endl;
+        
         map<char, vector <int> > site_partition = temp.gen_pattern_partition();
         
-        cout << "Here are your A's:" << endl;
-        copy(site_partition['A'].begin(), site_partition['A'].end(), ostream_iterator<int>(cout, " "));
-        cout << endl;
+        int i;
         
-        cout << "Here are your C's:" << endl;
-        copy(site_partition['C'].begin(), site_partition['C'].end(), ostream_iterator<int>(cout, " "));
-        cout << endl;
-        
-        cout << "Here are your G's:" << endl;
-        copy(site_partition['G'].begin(), site_partition['G'].end(), ostream_iterator<int>(cout, " "));
-        cout << endl;
-        
-        cout << "Here are your T's:" << endl;
-        copy(site_partition['T'].begin(), site_partition['T'].end(), ostream_iterator<int>(cout, " "));
-        cout << endl;
-
-//        int i;
-//        
-//        for (i = 0; i < alignment_length; ++i)
-//        {
-//            // Here we need to figure out some way to create a site pattern object with nothing in it,
-//            // then be able to continue initiating and filling the object and adding them to a vector one by one.
+        for (i = 0; i < alignment_length; ++i)
+        {
+            temp.reset_pattern(seq_patterns[i]);
+//            cout << "Site pattern:" << endl;
+//            temp.print(cout);
+//            cout << endl;
+            
+            site_partition = temp.gen_pattern_partition();
+            all_patterns.push_back(temp);
+            
+            
+//            cout << "Here are your A's:" << endl;
+//            copy(site_partition['A'].begin(), site_partition['A'].end(), ostream_iterator<int>(cout, " "));
+//            cout << endl;
 //            
-//            cout << seq_patterns[i] << endl;
-//        }
+//            cout << "Here are your C's:" << endl;
+//            copy(site_partition['C'].begin(), site_partition['C'].end(), ostream_iterator<int>(cout, " "));
+//            cout << endl;
+//            
+//            cout << "Here are your G's:" << endl;
+//            copy(site_partition['G'].begin(), site_partition['G'].end(), ostream_iterator<int>(cout, " "));
+//            cout << endl;
+//            
+//            cout << "Here are your T's:" << endl;
+//            copy(site_partition['T'].begin(), site_partition['T'].end(), ostream_iterator<int>(cout, " "));
+//            cout << endl << endl;
+        }
+        
+        vector<double> pattern_pas;
+        for (i = 0; i < 2; ++i)
+        {
+            pattern_pas.push_back(all_patterns[i].calculate_axpi(all_patterns[i+1]));
+        }
+        copy(pattern_pas.begin(), pattern_pas.end(), ostream_iterator<double>(cout, " "));
+        cout << endl;
+        
     }
     else if (data_type == "protein")
         CSequences2 sequences = read_fasta_file(2, filename.c_str());

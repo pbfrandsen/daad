@@ -17,13 +17,21 @@
 class SitePattern
 {
     faststring pattern;
+    std::map<char, std::vector<int> > partition_map;
 public:
     // Takes a faststring that conatins the site pattern
     SitePattern(faststring new_pattern)
     {
         pattern = new_pattern;
     }
-    
+    SitePattern()
+    {
+        pattern = "";
+    }
+    void reset_pattern(faststring new_pattern)
+    {
+        pattern = new_pattern;
+    }
     // print to the stream that the user chooses
     void print(std::ostream &os)
     {
@@ -35,7 +43,6 @@ public:
     {
         // Initiate a map to hold the partition splits
         // character state as keys and taxon numbers as values
-        std::map<char, std::vector<int> > partition_map;
         std::vector<int> a;
         std::vector<int> c;
         std::vector<int> g;
@@ -62,11 +69,70 @@ public:
         }
         return partition_map;
     }
+    std::map<char, std::vector<int> > give_pattern_partition()
+    {
+        return partition_map;
+    }
     
-//    double calculate_pa(friend SitePattern j)
-//    {
-//        
-//    }
+    // Now we need to have a function that can calculate and return the a(x, P(i))
+    // between this site pattern and another
+    double calculate_axpi(SitePattern & j)
+    {
+        double axpi = 0;
+        int num_parts = 4;
+        std::map<char, std::vector<int> > partition_to_compare = j.give_pattern_partition();
+        if (partition_map['A'].empty())
+            num_parts -= 1;
+        else
+            if (((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
+                && (!partition_to_compare['A'].empty() )) ||
+                ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
+                && (!partition_to_compare['C'].empty() )) ||
+                ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
+                && (!partition_to_compare['G'].empty() )) ||
+                (((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end())))
+                && (!partition_to_compare['T'].empty() )))
+                axpi += 1;
+        if (partition_map['C'].empty())
+            num_parts -= 1;
+        else
+            if (((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
+                 && (!partition_to_compare['A'].empty() )) ||
+                ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
+                 && (!partition_to_compare['C'].empty() )) ||
+                ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
+                 && (!partition_to_compare['G'].empty() )) ||
+                (((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end())))
+                && (!partition_to_compare['T'].empty() )))
+                axpi += 1;
+        if (partition_map['G'].empty())
+            num_parts -= 1;
+        else
+            if (((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
+                 && (!partition_to_compare['A'].empty() )) ||
+                ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
+                 && (!partition_to_compare['C'].empty() )) ||
+                ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
+                 && (!partition_to_compare['G'].empty() )) ||
+                (((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end())))
+                && (!partition_to_compare['T'].empty() )))
+                axpi += 1;
+        if (partition_map['T'].empty())
+            num_parts -= 1;
+        else
+            if (((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
+                 && (!partition_to_compare['A'].empty() )) ||
+                ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
+                 && (!partition_to_compare['C'].empty() )) ||
+                ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
+                 && (!partition_to_compare['G'].empty() )) ||
+                (((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end())))
+                && (!partition_to_compare['T'].empty() )))
+                axpi += 1;
+        std::cout << axpi << " " << num_parts << std::endl;
+        axpi /= num_parts;
+        return axpi;
+    }
 };
 
 #endif
