@@ -27,7 +27,7 @@ public:
     unsigned length = pattern.length();
     
     //Initiate a map to hold the partition splits
-    std::map<char, <vector> > partition_map;
+    std::map<char, vector<int> > partition_map;
     partition_map['A'];
     partition_map['C'];
     partition_map['G'];

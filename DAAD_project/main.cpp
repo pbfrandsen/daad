@@ -75,7 +75,7 @@ int main(int argc, const char ** argv)
         
         SitePattern temp(seq_patterns[0]);
         temp.print(cout);
-        map<int, <vector <int> > > site_partition = temp.gen_pattern_partition();
+        map<int, vector <int> > site_partition = temp.gen_pattern_partition();
         
 
         int i;
