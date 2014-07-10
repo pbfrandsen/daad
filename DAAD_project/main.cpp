@@ -75,18 +75,35 @@ int main(int argc, const char ** argv)
         
         SitePattern temp(seq_patterns[0]);
         temp.print(cout);
-        map<int, vector <int> > site_partition = temp.gen_pattern_partition();
+        cout << endl;
         
+        map<char, vector <int> > site_partition = temp.gen_pattern_partition();
+        
+        cout << "Here are your A's:" << endl;
+        copy(site_partition['A'].begin(), site_partition['A'].end(), ostream_iterator<int>(cout, " "));
+        cout << endl;
+        
+        cout << "Here are your C's:" << endl;
+        copy(site_partition['C'].begin(), site_partition['C'].end(), ostream_iterator<int>(cout, " "));
+        cout << endl;
+        
+        cout << "Here are your G's:" << endl;
+        copy(site_partition['G'].begin(), site_partition['G'].end(), ostream_iterator<int>(cout, " "));
+        cout << endl;
+        
+        cout << "Here are your T's:" << endl;
+        copy(site_partition['T'].begin(), site_partition['T'].end(), ostream_iterator<int>(cout, " "));
+        cout << endl;
 
-        int i;
-        
-        for (i = 0; i < alignment_length; ++i)
-        {
-            // Here we need to figure out some way to create a site pattern object with nothing in it,
-            // then be able to continue initiating and filling the object and adding them to a vector one by one.
-            
-            cout << seq_patterns[i] << endl;
-        }
+//        int i;
+//        
+//        for (i = 0; i < alignment_length; ++i)
+//        {
+//            // Here we need to figure out some way to create a site pattern object with nothing in it,
+//            // then be able to continue initiating and filling the object and adding them to a vector one by one.
+//            
+//            cout << seq_patterns[i] << endl;
+//        }
     }
     else if (data_type == "protein")
         CSequences2 sequences = read_fasta_file(2, filename.c_str());
