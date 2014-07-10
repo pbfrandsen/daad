@@ -85,142 +85,147 @@ public:
         // do a whole bunch of set comparisons, to see if any of the sets in the site pattern object are subsets of the
         // sets in the site pattern reference that is fed into the function. I use the "include" function to do this.
         // If the set is empty, then I move onto the next set.
-        if (partition_map['A'].empty())
+
+        
+        
+        
+        
+        if (partition_to_compare['A'].empty())
             num_parts -= 1;
         else
         {
-//            std::cout << "Trying A..." << std::endl;
+            std::cout << "Trying A..." << std::endl;
             if ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
-                && (!partition_to_compare['A'].empty() ))
+                && (!partition_map['A'].empty() ))
             {
                 axpi += 1;
-//                std::cout << "A to A." << std::endl;
+                std::cout << "A to A." << std::endl;
             }
 
-            else if ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
-                     && (!partition_to_compare['C'].empty() ))
+            else if ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
+                     && (!partition_map['C'].empty() ))
             {
                 axpi += 1;
-//                std::cout << "A to C." << std::endl;
+                std::cout << "A to C." << std::endl;
             }
 
-            else if ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
-                     && (!partition_to_compare['G'].empty() ))
+            else if ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
+                     && (!partition_map['G'].empty() ))
             {
                 axpi += 1;
-//                std::cout << "A to G." << std::endl;
+                std::cout << "A to G." << std::endl;
             }
 
-            else if ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end()))
-                     && (!partition_to_compare['T'].empty() ))
+            else if ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
+                     && (!partition_map['T'].empty() ))
             {
                 axpi += 1;
-//                std::cout << "A to T." << std::endl;
+                std::cout << "A to T." << std::endl;
             }
 
         }
-        if (partition_map['C'].empty())
+        if (partition_to_compare['C'].empty())
             num_parts -= 1;
         else
         {
-//            std::cout << "Trying C..." << std::endl;
-            if ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
-                && (!partition_to_compare['A'].empty() ))
+            std::cout << "Trying C..." << std::endl;
+            if ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
+                && (!partition_map['A'].empty() ))
             {
                 axpi += 1;
-//                std::cout << "C to A." << std::endl;
+                std::cout << "C to A." << std::endl;
             }
 
             else if ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
-                     && (!partition_to_compare['C'].empty() ))
+                     && (!partition_map['C'].empty() ))
             {
                 axpi += 1;
-//                std::cout << "C to C." << std::endl;
-            }
-
-            else if ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
-                     && (!partition_to_compare['G'].empty() ))
-            {
-                axpi += 1;
-//                std::cout << "C to G." << std::endl;
-            }
-
-            else if ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end()))
-                     && (!partition_to_compare['T'].empty() ))
-            {
-                axpi += 1;
-//                std::cout << "C to T." << std::endl;
-            }
-
-        }
-        if (partition_map['G'].empty())
-            num_parts -= 1;
-        else
-        {
-//            std::cout << "Trying G..." << std::endl;
-            if ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
-                 && (!partition_to_compare['A'].empty() ))
-            {
-                axpi += 1;
-//                std::cout << "G to A." << std::endl;
+                std::cout << "C to C." << std::endl;
             }
 
             else if ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
-                 && (!partition_to_compare['C'].empty() ))
+                     && (!partition_map['G'].empty() ))
             {
                 axpi += 1;
-//                std::cout << "G to C." << std::endl;
-            }
-
-            else if ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
-                 && (!partition_to_compare['G'].empty() ))
-            {
-                axpi += 1;
-//                std::cout << "G to G." << std::endl;
-            }
-
-            else if ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end()))
-                && (!partition_to_compare['T'].empty() ))
-            {
-                axpi += 1;
-//                std::cout << "G to T." << std::endl;
-            }
-        }
-        if (partition_map['T'].empty())
-            num_parts -= 1;
-        else
-        {
-//            std::cout << "Trying T..." << std::endl;
-            if ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['A'].begin(), partition_to_compare['A'].end()))
-                && (!partition_to_compare['A'].empty() ))
-            {
-                axpi += 1;
-//                std::cout << "T to A." << std::endl;
+                std::cout << "C to G." << std::endl;
             }
 
             else if ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['C'].begin(), partition_to_compare['C'].end()))
-                     && (!partition_to_compare['C'].empty() ))
+                     && (!partition_map['T'].empty() ))
             {
                 axpi += 1;
-//                std::cout << "T to C." << std::endl;
-            }
-
-            else if ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
-                     && (!partition_to_compare['G'].empty() ))
-            {
-                axpi += 1;
-//                std::cout << "T to G." << std::endl;
-            }
-
-            else if ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end()))
-                     && (!partition_to_compare['T'].empty() ))
-            {
-                axpi += 1;
-//                std::cout << "T to T." << std::endl;
+                std::cout << "C to T." << std::endl;
             }
 
         }
-//        std::cout << axpi << " " << num_parts << std::endl;
+        if (partition_to_compare['G'].empty())
+            num_parts -= 1;
+        else
+        {
+            std::cout << "Trying G..." << std::endl;
+            if ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
+                 && (!partition_map['A'].empty() ))
+            {
+                axpi += 1;
+                std::cout << "G to A." << std::endl;
+            }
+
+            else if ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
+                 && (!partition_map['C'].empty() ))
+            {
+                axpi += 1;
+                std::cout << "G to C." << std::endl;
+            }
+
+            else if ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
+                 && (!partition_map['G'].empty() ))
+            {
+                axpi += 1;
+                std::cout << "G to G." << std::endl;
+            }
+
+            else if ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['G'].begin(), partition_to_compare['G'].end()))
+                && (!partition_map['T'].empty() ))
+            {
+                axpi += 1;
+                std::cout << "G to T." << std::endl;
+            }
+        }
+        if (partition_to_compare['T'].empty())
+            num_parts -= 1;
+        else
+        {
+            std::cout << "Trying T..." << std::endl;
+            if ((std::includes(partition_map['A'].begin(), partition_map['A'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end()))
+                && (!partition_map['A'].empty() ))
+            {
+                axpi += 1;
+                std::cout << "T to A." << std::endl;
+            }
+
+            else if ((std::includes(partition_map['C'].begin(), partition_map['C'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end()))
+                     && (!partition_map['C'].empty() ))
+            {
+                axpi += 1;
+                std::cout << "T to C." << std::endl;
+            }
+
+            else if ((std::includes(partition_map['G'].begin(), partition_map['G'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end()))
+                     && (!partition_map['G'].empty() ))
+            {
+                axpi += 1;
+                std::cout << "T to G." << std::endl;
+            }
+
+            else if ((std::includes(partition_map['T'].begin(), partition_map['T'].end(), partition_to_compare['T'].begin(), partition_to_compare['T'].end()))
+                     && (!partition_map['T'].empty() ))
+            {
+                axpi += 1;
+                std::cout << "T to T." << std::endl;
+            }
+
+        }
+        std::cout << axpi << " " << num_parts << std::endl;
         pa = axpi/num_parts;
         return pa;
     }

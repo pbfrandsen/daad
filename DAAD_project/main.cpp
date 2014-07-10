@@ -100,25 +100,25 @@ int main(int argc, const char ** argv)
             site_partition = temp.gen_pattern_partition();
             all_patterns.push_back(temp);
             
-            if (i < 10)
-            {
-                cout << "On item number: " << i << endl;
-                cout << "Here are your A's:" << endl;
-                copy(site_partition['A'].begin(), site_partition['A'].end(), ostream_iterator<int>(cout, " "));
-                cout << endl;
-                
-                cout << "Here are your C's:" << endl;
-                copy(site_partition['C'].begin(), site_partition['C'].end(), ostream_iterator<int>(cout, " "));
-                cout << endl;
-                
-                cout << "Here are your G's:" << endl;
-                copy(site_partition['G'].begin(), site_partition['G'].end(), ostream_iterator<int>(cout, " "));
-                cout << endl;
-                
-                cout << "Here are your T's:" << endl;
-                copy(site_partition['T'].begin(), site_partition['T'].end(), ostream_iterator<int>(cout, " "));
-                cout << endl << endl;
-            }
+//            if (i < 10)
+//            {
+//                cout << "On item number: " << i << endl;
+//                cout << "Here are your A's:" << endl;
+//                copy(site_partition['A'].begin(), site_partition['A'].end(), ostream_iterator<int>(cout, " "));
+//                cout << endl;
+//                
+//                cout << "Here are your C's:" << endl;
+//                copy(site_partition['C'].begin(), site_partition['C'].end(), ostream_iterator<int>(cout, " "));
+//                cout << endl;
+//                
+//                cout << "Here are your G's:" << endl;
+//                copy(site_partition['G'].begin(), site_partition['G'].end(), ostream_iterator<int>(cout, " "));
+//                cout << endl;
+//                
+//                cout << "Here are your T's:" << endl;
+//                copy(site_partition['T'].begin(), site_partition['T'].end(), ostream_iterator<int>(cout, " "));
+//                cout << endl << endl;
+//            }
         }
         
         double pa_sum;
