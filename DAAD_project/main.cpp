@@ -11,6 +11,8 @@
 #include "../faststring2.h"
 #include "../site_pattern.h"
 #include "../Cfile/CFile2_1.h"
+#include <map>
+#include <vector>
 
 using namespace std;
 
@@ -45,6 +47,7 @@ CSequences2 read_fasta_file(int type, const char *fn )
 }
 
 
+
 int main(int argc, const char ** argv)
 {
 
@@ -63,20 +66,27 @@ int main(int argc, const char ** argv)
     if (data_type == "dna")
     {
         CSequences2 sequences = read_fasta_file(1, filename.c_str());
+        unsigned alignment_length = sequences.GetPosNum();
+        
         vector<faststring> seq_patterns;
         vector<SitePattern> all_patterns;
 
         seq_patterns = sequences.get_pattern_vec();
         
-        SitePattern first(seq_patterns[0]);
-        first.print(cout);
-        cout << endl;
+        SitePattern temp(seq_patterns[0]);
+        temp.print(cout);
+        map<int, <vector <int> > > site_partition = temp.gen_pattern_partition();
         
-//        int i;
-//        for (i = 0; i < 50; ++i)
-//        {
-//            cout << seq_patterns[i] << endl;
-//        }
+
+        int i;
+        
+        for (i = 0; i < alignment_length; ++i)
+        {
+            // Here we need to figure out some way to create a site pattern object with nothing in it,
+            // then be able to continue initiating and filling the object and adding them to a vector one by one.
+            
+            cout << seq_patterns[i] << endl;
+        }
     }
     else if (data_type == "protein")
         CSequences2 sequences = read_fasta_file(2, filename.c_str());
