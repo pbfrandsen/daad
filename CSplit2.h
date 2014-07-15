@@ -43,6 +43,11 @@ class CSplit
     split.set(i);
   }
 
+  void reset(unsigned i)
+  {
+    split.reset(i);
+  }
+
   bool test(unsigned i) const
   {
     return split.test(i);
@@ -62,6 +67,12 @@ class CSplit
   {
     split.flip();
   }
+
+  void flip(unsigned i)
+  {
+    split.flip(i);
+  }
+
 
   unsigned count_taxa_in_ingroup()
   {
@@ -85,6 +96,30 @@ class CSplit
       return true;
     else
       return false;
+  }
+
+  // Returns true if all 1s in (*this) are also 1s in s_b
+  bool is_this_a_subset_of_the_parameter(const CSplit& s_b) const
+  {
+    CSplit s_b_flipped(s_b.split);
+     s_b_flipped.split.flip();
+
+     // Some debug code:
+     //     std::cout << "*this & parameter_flipped: " << (split & s_b_flipped.split) << std::endl;
+
+     return  (split & s_b_flipped.split).none();
+  }
+
+  // Returns true if all 1s in s_b are also 1s in (*this)
+  bool is_parameter_a_subset_of_this(const CSplit& s_b) const
+  {
+    CSplit s_a_flipped(split);
+     s_a_flipped.split.flip();
+
+     // Some debug code:
+     //     std::cout << "*this flipped & parameter: " << (s_a_flipped.split & s_b.split) << std::endl;
+
+     return  (s_a_flipped.split & s_b.split).none();
   }
 
   void print(std::ostream& os) const
