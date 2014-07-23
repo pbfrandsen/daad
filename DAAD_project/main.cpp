@@ -157,7 +157,14 @@ int main(int argc, const char ** argv)
                 if (i == j)
                     continue;
                 else
+                {
                     pa_sum += all_patterns[i].calculate_pa_2(all_patterns[j]);
+                    cout << "pa for these: ";
+                    all_patterns[i].print(cout);
+                    cout << ", ";
+                    all_patterns[j].print(cout);
+                    cout << " is " << all_patterns[i].calculate_pa_2(all_patterns[j]) << endl;
+                }
             }
             site_rates.push_back(pa_sum/(alignment_length - 1));
         }

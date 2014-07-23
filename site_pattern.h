@@ -296,104 +296,124 @@ public:
         std::vector<CSplit> partition_to_compare = j.give_pattern_bitsets();
         
         // now do a bunch of comparisons. Yeehaw.
-        if (partition_to_compare[0].none())
+        partition_to_compare[0].print(std::cout);
+        std::cout << std::endl;
+        std::cout << !partition_to_compare[0].any() << std::endl;
+        std::cout << partition_to_compare[0].none() << std::endl;
+        std::cout << partition_to_compare[0].any() << std::endl;
+        std::cout << !partition_to_compare[0].none() << std::endl;
+        std::cout << std::endl;
+        if (!partition_to_compare[0].any())
+        {
             num_parts -= 1;
+            std::cout << "Taking away one." << std::endl;
+        }
         else
         {
-            if ((!returnable_vector_of_bitsets[0].none()) && returnable_vector_of_bitsets[0].is_this_a_subset_of_the_parameter(partition_to_compare[0]))
+            std::cout << "This is the A's, should you be here?\n";
+            if ((returnable_vector_of_bitsets[0].any()) && (returnable_vector_of_bitsets[0].is_this_a_subset_of_the_parameter(partition_to_compare[0])))
             {
                 axpi += 1;
-                std::cout << "A to A." << std::endl;
+//                std::cout << "A to A." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[1].none()) && returnable_vector_of_bitsets[1].is_this_a_subset_of_the_parameter(partition_to_compare[0]))
+            else if ((returnable_vector_of_bitsets[1].any()) && (returnable_vector_of_bitsets[1].is_this_a_subset_of_the_parameter(partition_to_compare[0])))
             {
                 axpi += 1;
-                std::cout << "A to C." << std::endl;
+//                std::cout << "A to C." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[2].none()) && returnable_vector_of_bitsets[2].is_this_a_subset_of_the_parameter(partition_to_compare[0]))
+            else if ((returnable_vector_of_bitsets[2].any()) && (returnable_vector_of_bitsets[2].is_this_a_subset_of_the_parameter(partition_to_compare[0])))
             {
                 axpi += 1;
-                std::cout << "A to G." << std::endl;
+//                std::cout << "A to G." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[3].none()) && returnable_vector_of_bitsets[3].is_this_a_subset_of_the_parameter(partition_to_compare[0]))
+            else if ((returnable_vector_of_bitsets[3].any()) && (returnable_vector_of_bitsets[3].is_this_a_subset_of_the_parameter(partition_to_compare[0])))
             {
                 axpi += 1;
-                std::cout << "A to T." << std::endl;
+//                std::cout << "A to T." << std::endl;
             }
         }
-        if (partition_to_compare[1].none())
+        if (!partition_to_compare[1].any())
+        {
             num_parts -= 1;
+            std::cout << "Taking away one." << std::endl;
+        }
         else
         {
-            if ((!returnable_vector_of_bitsets[0].none()) && returnable_vector_of_bitsets[0].is_this_a_subset_of_the_parameter(partition_to_compare[1]))
+            if ((returnable_vector_of_bitsets[0].any()) && (returnable_vector_of_bitsets[0].is_this_a_subset_of_the_parameter(partition_to_compare[1])))
             {
                 axpi += 1;
-                std::cout << "C to A." << std::endl;
+//                std::cout << "C to A." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[1].none()) && returnable_vector_of_bitsets[1].is_this_a_subset_of_the_parameter(partition_to_compare[1]))
+            else if ((returnable_vector_of_bitsets[1].any()) && (returnable_vector_of_bitsets[1].is_this_a_subset_of_the_parameter(partition_to_compare[1])))
             {
                 axpi += 1;
-                std::cout << "C to C." << std::endl;
+//                std::cout << "C to C." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[2].none()) && returnable_vector_of_bitsets[2].is_this_a_subset_of_the_parameter(partition_to_compare[1]))
+            else if ((returnable_vector_of_bitsets[2].any()) && (returnable_vector_of_bitsets[2].is_this_a_subset_of_the_parameter(partition_to_compare[1])))
             {
                 axpi += 1;
-                std::cout << "C to G." << std::endl;
+//                std::cout << "C to G." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[3].none()) && returnable_vector_of_bitsets[3].is_this_a_subset_of_the_parameter(partition_to_compare[1]))
+            else if ((returnable_vector_of_bitsets[3].any()) && (returnable_vector_of_bitsets[3].is_this_a_subset_of_the_parameter(partition_to_compare[1])))
             {
                 axpi += 1;
-                std::cout << "C to T." << std::endl;
+//                std::cout << "C to T." << std::endl;
             }
         }
-        if (partition_to_compare[2].none())
+        if (!partition_to_compare[2].any())
+        {
             num_parts -= 1;
+            std::cout << "Taking away one." << std::endl;
+        }
         else
         {
-            if ((!returnable_vector_of_bitsets[0].none()) && returnable_vector_of_bitsets[0].is_this_a_subset_of_the_parameter(partition_to_compare[2]))
+            if ((returnable_vector_of_bitsets[0].any()) && (returnable_vector_of_bitsets[0].is_this_a_subset_of_the_parameter(partition_to_compare[2])))
             {
                 axpi += 1;
-                std::cout << "G to A." << std::endl;
+//                std::cout << "G to A." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[1].none()) && returnable_vector_of_bitsets[1].is_this_a_subset_of_the_parameter(partition_to_compare[2]))
+            else if ((returnable_vector_of_bitsets[1].any()) && (returnable_vector_of_bitsets[1].is_this_a_subset_of_the_parameter(partition_to_compare[2])))
             {
                 axpi += 1;
-                std::cout << "G to C." << std::endl;
+//                std::cout << "G to C." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[2].none()) && returnable_vector_of_bitsets[2].is_this_a_subset_of_the_parameter(partition_to_compare[2]))
+            else if ((returnable_vector_of_bitsets[2].any()) && (returnable_vector_of_bitsets[2].is_this_a_subset_of_the_parameter(partition_to_compare[2])))
             {
                 axpi += 1;
-                std::cout << "G to G." << std::endl;
+//                std::cout << "G to G." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[3].none()) && returnable_vector_of_bitsets[3].is_this_a_subset_of_the_parameter(partition_to_compare[2]))
+            else if ((returnable_vector_of_bitsets[3].any()) && (returnable_vector_of_bitsets[3].is_this_a_subset_of_the_parameter(partition_to_compare[2])))
             {
                 axpi += 1;
-                std::cout << "G to T." << std::endl;
+//                std::cout << "G to T." << std::endl;
             }
         }
-        if (partition_to_compare[3].none())
+        if (!partition_to_compare[3].any())
+        {
             num_parts -= 1;
+            std::cout << "Taking away one." << std::endl;
+        }
         else
         {
-            if ((!returnable_vector_of_bitsets[0].none()) && returnable_vector_of_bitsets[0].is_this_a_subset_of_the_parameter(partition_to_compare[3]))
+            if ((returnable_vector_of_bitsets[0].any()) && (returnable_vector_of_bitsets[0].is_this_a_subset_of_the_parameter(partition_to_compare[3])))
             {
                 axpi += 1;
-                std::cout << "T to A." << std::endl;
+//                std::cout << "T to A." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[1].none()) && returnable_vector_of_bitsets[1].is_this_a_subset_of_the_parameter(partition_to_compare[3]))
+            else if ((returnable_vector_of_bitsets[1].any()) && (returnable_vector_of_bitsets[1].is_this_a_subset_of_the_parameter(partition_to_compare[3])))
             {
                 axpi += 1;
-                std::cout << "T to C." << std::endl;
+//                std::cout << "T to C." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[2].none()) && returnable_vector_of_bitsets[2].is_this_a_subset_of_the_parameter(partition_to_compare[3]))
+            else if ((returnable_vector_of_bitsets[2].any()) && (returnable_vector_of_bitsets[2].is_this_a_subset_of_the_parameter(partition_to_compare[3])))
             {
                 axpi += 1;
-                std::cout << "T to G." << std::endl;
+//                std::cout << "T to G." << std::endl;
             }
-            else if ((!returnable_vector_of_bitsets[3].none()) && returnable_vector_of_bitsets[3].is_this_a_subset_of_the_parameter(partition_to_compare[3]))
+            else if ((returnable_vector_of_bitsets[3].any()) && (returnable_vector_of_bitsets[3].is_this_a_subset_of_the_parameter(partition_to_compare[3])))
             {
                 axpi += 1;
-                std::cout << "T to T." << std::endl;
+//                std::cout << "T to T." << std::endl;
             }
         }
         pa = axpi/num_parts;
