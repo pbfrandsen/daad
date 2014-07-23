@@ -52,6 +52,7 @@ CSequences2 read_fasta_file(int type, const char *fn )
 int main(int argc, const char ** argv)
 {
 
+    cout << sizeof(unsigned);
     // open the file (in this case, fasta, we can add an option for phylip if we wish...
     if (argc != 3)
     {
