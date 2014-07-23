@@ -13,6 +13,7 @@
 #include "../Cfile/CFile2_1.h"
 #include <map>
 #include <vector>
+#include <iterator>
 
 using namespace std;
 
