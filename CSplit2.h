@@ -121,6 +121,18 @@ class CSplit
 
      return  (s_a_flipped.split & s_b.split).none();
   }
+    
+  // Returns true if there is something in the CSplit
+  bool any()
+  {
+    return split.any();
+  }
+
+  // Returns true if the CSplit is empty
+  bool none()
+  {
+    return split.none();
+  }
 
   void print(std::ostream& os) const
   {

@@ -85,7 +85,15 @@ int main(int argc, const char ** argv)
         temp.print(cout);
         cout << endl;
         
-        map<char, vector <int> > site_partition = temp.gen_pattern_partition();
+        vector <CSplit> site_partition = temp.gen_pattern_bitsets();
+        site_partition[0].print(cout);
+        cout << endl;
+        site_partition[1].print(cout);
+        cout << endl;
+        site_partition[2].print(cout);
+        cout << endl;
+        site_partition[3].print(cout);
+        cout << endl;
         
         int i;
         int j;
@@ -93,11 +101,21 @@ int main(int argc, const char ** argv)
         for (i = 0; i < alignment_length; ++i)
         {
             temp.reset_pattern(seq_patterns[i]);
-//            cout << "Site pattern:" << endl;
-//            temp.print(cout);
-//            cout << endl;
+            cout << "Site pattern:" << endl;
+            temp.print(cout);
+            cout << endl;
             
-            site_partition = temp.gen_pattern_partition();
+            site_partition = temp.gen_pattern_bitsets();
+            cout << "This is at the end of the function" << endl;
+            temp.give_pattern_bitsets()[0].print(cout);
+            cout << endl;
+            temp.give_pattern_bitsets()[1].print(cout);
+            cout << endl;
+            temp.give_pattern_bitsets()[2].print(cout);
+            cout << endl;
+            temp.give_pattern_bitsets()[3].print(cout);
+            cout << endl;
+            
             all_patterns.push_back(temp);
             
 //            if (i < 10)
@@ -121,6 +139,14 @@ int main(int argc, const char ** argv)
 //            }
         }
         
+        cout << "End of site patterns..." << endl << endl;
+        
+//        for (int f=0; f< alignment_length; ++f)
+//        {
+//            all_patterns[f].print(cout);
+//            cout << endl;
+//        }
+        
         double pa_sum;
         vector<double> site_rates;
         for (i = 0; i < alignment_length; ++i)
@@ -131,7 +157,7 @@ int main(int argc, const char ** argv)
                 if (i == j)
                     continue;
                 else
-                    pa_sum += all_patterns[i].calculate_pa(all_patterns[j]);
+                    pa_sum += all_patterns[i].calculate_pa_2(all_patterns[j]);
             }
             site_rates.push_back(pa_sum/(alignment_length - 1));
         }
