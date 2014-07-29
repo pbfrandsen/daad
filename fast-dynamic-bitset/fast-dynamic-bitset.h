@@ -1,6 +1,9 @@
 #ifndef FAST_DYNAMIC_BITSET_H
 #define FAST_DYNAMIC_BITSET_H
 
+// 23.7.2014: Since unsigned long has 64 bits on some computers unsinged long cannot be used as
+//            the word data type without having to change large parts of the code.
+
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -18,6 +21,10 @@
 #define __get_num_words(size)             ((size + 31) >> 5)
 #define __get_num_byte(words)             ( words*4 )
 
+// Must be a 32 bit integer type:
+//typedef unsigned   bitset_word_type;
+typedef unsigned   my_uint_32;
+
 const unsigned char  __num_bits_table[256] =
      {
        0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4, 1, 2, 2, 3, 2, 3, 3, 4, 2, 3, 3, 4, 3, 4, 4, 5,
@@ -30,7 +37,7 @@ const unsigned char  __num_bits_table[256] =
        3, 4, 4, 5, 4, 5, 5, 6, 4, 5, 5, 6, 5, 6, 6, 7, 4, 5, 5, 6, 5, 6, 6, 7, 5, 6, 6, 7, 6, 7, 7, 8
      };
 
-const unsigned long __mask_table[32] =
+const my_uint_32 __mask_table[32] =
 {
   0x00000001, 0x00000002, 0x00000004, 0x00000008,
   0x00000010, 0x00000020, 0x00000040, 0x00000080,
@@ -44,7 +51,7 @@ const unsigned long __mask_table[32] =
 };
 
 
-const unsigned long __empty_mask_table[32] =
+const my_uint_32 __empty_mask_table[32] =
 {
   0xFFFFFFFF, 0x7FFFFFFF, 0x3FFFFFFF, 0x1FFFFFFF,
   0x0FFFFFFF, 0x07FFFFFF, 0x03FFFFFF, 0x01FFFFFF,
@@ -67,19 +74,19 @@ class fast_dynamic_bitset
   class UnequalSizedBitsets : public exception {};
 
  private:
-  unsigned long *__data;
-  unsigned long  __size;
-  unsigned long  __numWords;
-  //  unsigned long  __empty_mask;
+  my_uint_32        *__data;
+  my_uint_32         __size;
+  my_uint_32         __numWords;
+  //  my_uint_32  __empty_mask;
 
  public:
-  fast_dynamic_bitset(unsigned long size=0):__size(size),__numWords(__get_num_words(size))
+  fast_dynamic_bitset(my_uint_32 size=0):__size(size),__numWords(__get_num_words(size))
   {
     //    if (size == 0)
     //     throw zeroSizeBitset();
 
     //    __size     = size;
-    __data = new unsigned long [__numWords];
+    __data = new my_uint_32 [__numWords];
     //    __empty_mask = __empty_mask_table[__numWords * __num_bits_in_word - size];
       // 0xFFFFFFFF >> (__numWords * __num_bits_in_word - size);
   }
@@ -87,7 +94,7 @@ class fast_dynamic_bitset
   fast_dynamic_bitset(const fast_dynamic_bitset &a)
   {
     memcpy((void*)this, (void*) &a, sizeof(fast_dynamic_bitset) );
-    __data = new unsigned long [__numWords];
+    __data = new my_uint_32 [__numWords];
     memcpy((void*)__data,(void*)a.__data, __get_num_byte(__numWords) );
   }
 
@@ -96,7 +103,7 @@ class fast_dynamic_bitset
     //    std::cout << "Dest" << std::endl;
   }
 
-  unsigned long size()
+  my_uint_32 size()
   {
     return __size;
   }
@@ -107,7 +114,7 @@ class fast_dynamic_bitset
     {
       delete [] __data;
       memcpy((void*)this, (void*) &a, sizeof(fast_dynamic_bitset) );
-      __data = new unsigned long [__numWords];
+      __data = new my_uint_32 [__numWords];
       memcpy((void*)__data,(void*)a.__data, __get_num_byte(__numWords) );
     }
     else
@@ -130,25 +137,25 @@ class fast_dynamic_bitset
 
   void set()
   {
-    for(unsigned long index=0; index < __numWords-1; ++index)
-      __data[index] = ~static_cast<unsigned long>(0);
+    for(my_uint_32 index=0; index < __numWords-1; ++index)
+      __data[index] = ~static_cast<my_uint_32>(0);
     __data[__numWords-1] = __empty_mask_table[__numWords * __num_bits_in_word - __size];
   }
 
   void flip()
   {
-    for(unsigned long index=0; index < __numWords; ++index)
+    for(my_uint_32 index=0; index < __numWords; ++index)
       __data[index] = ~__data[index];
     __data[__numWords-1] &= __empty_mask_table[__numWords * __num_bits_in_word - __size];
   }
 
 
-  void unchecked_set(unsigned long i)
+  void unchecked_set(my_uint_32 i)
   {
     __data[__get_word_index(i)] |= __mask_table[__get_word_offset(i)];
   }
 
-  void set(unsigned long i)
+  void set(my_uint_32 i)
   {
     if (i >= __size)
       throw outOfRange();
@@ -156,12 +163,12 @@ class fast_dynamic_bitset
     __data[__get_word_index(i)] |= __mask_table[__get_word_offset(i)];
   }
 
-  void unchecked_reset(unsigned long i)
+  void unchecked_reset(my_uint_32 i)
   {
     __data[__get_word_index(i)] ^= __mask_table[__get_word_offset(i)];
   }
 
-  void reset(unsigned long i)
+  void reset(my_uint_32 i)
   {
     if (i >= __size)
       throw outOfRange();
@@ -169,7 +176,7 @@ class fast_dynamic_bitset
     __data[__get_word_index(i)] ^= __mask_table[__get_word_offset(i)];
   }
 
-  void unchecked_set(unsigned long i, unsigned long x)
+  void unchecked_set(my_uint_32 i, my_uint_32 x)
   {
     if (x==0)
       unchecked_reset(i);
@@ -177,7 +184,7 @@ class fast_dynamic_bitset
       unchecked_set(i);
   }
 
-  void set(unsigned long i, unsigned long x)
+  void set(my_uint_32 i, my_uint_32 x)
   {
     if (x==0)
       reset(i);
@@ -185,12 +192,12 @@ class fast_dynamic_bitset
       set(i);
   }
 
-  bool unchecked_test(unsigned long i) const
+  bool unchecked_test(my_uint_32 i) const
   {
     return (__data[__get_word_index(i)] & __mask_table[__get_word_offset(i)]);
   }
 
-  bool test(unsigned long i) const
+  bool test(my_uint_32 i) const
   {
     //    if (i >= __size)
     //      throw outOfRange();
@@ -198,12 +205,12 @@ class fast_dynamic_bitset
     return (__data[__get_word_index(i)] & __mask_table[__get_word_offset(i)]);
   }
 
-  void unchecked_flip(unsigned long i)
+  void unchecked_flip(my_uint_32 i)
   {
     __data[__get_word_index(i)] ^= __mask_table[__get_word_offset(i)];
   }
 
-  void flip(unsigned long i)
+  void flip(my_uint_32 i)
   {
     //    if (i >= __size)
     //      throw outOfRange();
@@ -216,7 +223,7 @@ class fast_dynamic_bitset
     //    if ( a.__numWords != __numWords )
     //      throw UnequalSizedBitsets();
 
-    for(unsigned long index=0; index < __numWords; ++index)
+    for(my_uint_32 index=0; index < __numWords; ++index)
       __data[index] &= a.__data[index];
   }
 
@@ -225,7 +232,7 @@ class fast_dynamic_bitset
     //    if ( a.__numWords != __numWords )
     //     throw UnequalSizedBitsets();
 
-    for(unsigned long index=0; index < __numWords; ++index)
+    for(my_uint_32 index=0; index < __numWords; ++index)
       __data[index] |= a.__data[index];
   }
 
@@ -234,7 +241,7 @@ class fast_dynamic_bitset
     //    if ( a.__numWords != __numWords )
     //      throw UnequalSizedBitsets();
 
-    for(unsigned long index=0; index < __numWords; ++index)
+    for(my_uint_32 index=0; index < __numWords; ++index)
       __data[index] ^= a.__data[index];
   }
 
@@ -251,7 +258,7 @@ class fast_dynamic_bitset
 
 /*     // Print overhead-empty bit in bitset: */
 /*     //------------------------------------- */
-/*     unsigned long k = __numWords * __num_bits_in_word; */
+/*     my_uint_32 k = __numWords * __num_bits_in_word; */
 /*     while (k != __size) */
 /*     { */
 /*       --k; */
@@ -264,7 +271,7 @@ class fast_dynamic_bitset
 
     // Print bitset with high bits first
     //-----------------------------------
-    unsigned long i = __size;
+    my_uint_32 i = __size;
 
     while (i != 0)
     {
@@ -283,7 +290,7 @@ class fast_dynamic_bitset
 
     // Print bitset with low bits first
     //----------------------------------
-    unsigned long i = 0;
+    my_uint_32 i = 0;
 
     while (i < __size )
     {
@@ -301,7 +308,7 @@ class fast_dynamic_bitset
   {
     // Print bitset with low bits first
     //----------------------------------
-    unsigned long i = 0;
+    my_uint_32 i = 0;
 
     while (i < __size )
     {
@@ -328,18 +335,18 @@ class fast_dynamic_bitset
 
   void binary_out(std::ostream& os)
   {
-    os.write((char*)__data,__numWords*sizeof(unsigned long));
+    os.write((char*)__data,__numWords*sizeof(my_uint_32));
   }
 
   void binary_in(std::istream& is)
   {
-    is.read((char*) __data,__numWords*sizeof(unsigned long));
+    is.read((char*) __data,__numWords*sizeof(my_uint_32));
   }
 
 
-  unsigned long count() const
+  my_uint_32 count() const
   {
-    unsigned long sum = 0;
+    my_uint_32 sum = 0;
     unsigned char *ptr     = (unsigned char*) __data;
     unsigned char *ptr_end = ptr + __get_num_byte(__numWords);
 
@@ -353,7 +360,7 @@ class fast_dynamic_bitset
 
   bool any() const
   {
-    for(unsigned long i=0; i < __numWords; ++i)
+    for(my_uint_32 i=0; i < __numWords; ++i)
     {
       if (__data[i])
 	return true;
@@ -368,7 +375,7 @@ class fast_dynamic_bitset
 
   void operator++()
   {
-    unsigned long i=0;
+    my_uint_32 i=0;
 
     while ( i < __numWords )
     {
@@ -384,7 +391,7 @@ class fast_dynamic_bitset
     //    if ( a.__numWords != b.__numWords )
     //      throw UnequalSizedBitsets();
 
-    for (unsigned long i = 0; i < a.__numWords; --i)
+    for (my_uint_32 i = 0; i < a.__numWords; --i)
     {
       if ( a.__data[i] != b.__data[i] )
 	return true;
@@ -402,7 +409,7 @@ class fast_dynamic_bitset
     //    if ( a.__numWords != b.__numWords )
     //      throw UnequalSizedBitsets();
 
-    for (unsigned long i=a.__numWords-1; i > 0; --i)
+    for (my_uint_32 i=a.__numWords-1; i > 0; --i)
     {
       if ( a.__data[i] < b.__data[i] )
 	return true;
@@ -420,7 +427,7 @@ class fast_dynamic_bitset
     //    if ( a.__numWords != b.__numWords )
     //      throw UnequalSizedBitsets();
 
-    for (unsigned long i=a.__numWords-1; i > 0; --i)
+    for (my_uint_32 i=a.__numWords-1; i > 0; --i)
     {
       if ( a.__data[i] != b.__data[i] )
 	return a.__data[i] > b.__data[i];

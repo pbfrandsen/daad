@@ -4,34 +4,106 @@
 using namespace std;
 
 
+void test_non_any(fast_dynamic_bitset &a)
+{
+  if ( a.none() )
+  {
+    cout << "none is true" << endl;
+  }
+  else
+  {
+    cout << "none is false" << endl;
+  }
+  if ( a.any() )
+  {
+    cout << "any is true" << endl;
+  }
+  else
+  {
+    cout << "any is flase" << endl;
+  }
+}
+
+
 void test_set(fast_dynamic_bitset &a, unsigned long i)
 {
   cout << "Test setting bit " << i << endl;
   a.set(i);
   cout << a << endl;
+  cout << "Number of bits sets: " << a.count() << endl;
+  test_non_any(a);
+  a.flip();
+  cout << a << endl;
+  cout << "Number of bits sets: " << a.count() << endl;
+  test_non_any(a);
+  a.flip();
+  cout << endl;
 }
 
 
-int main()
+
+
+void test_basic()
 {
+  cout << "Test constructor with 40 bits:" << endl;
+   fast_dynamic_bitset g(40);
+   cout << g << endl;
+   test_non_any(g);
+   cout << endl;
+
+   unsigned i;
+   for (i=0; i<40; ++i)
+     test_set(g,i);
+
+   cout << "Clear test:" << endl;
+   g.clear();
+   cout << g << endl;
+   test_non_any(g);
+   cout << endl;
+
+   g.set();
+   cout << g << endl;
+   test_non_any(g);
+   cout << endl;
+
+   g.clear();
+   g.set(1);
+   g.set(3);
+   g.set(5);
+   cout << g << endl;
+   test_non_any(g);
+   cout << endl;
+   
+   g.reset(3);
+   cout << g << endl;
+   test_non_any(g);
+   cout << endl;
+
+   fast_dynamic_bitset h(40);
+   g.set(30);
+   g.set(31);
+   g.set(32);
+
+   h.set(32);
+   h.set(33);
+   h.set(34);
+
+   fast_dynamic_bitset Rand, Ror, Rxor;
+
+   Rand = g & h;
+   Ror  = g | h;
+   Rxor = g ^ h;
+
+   cout << "g: " << g    << endl;
+   cout << "h: " << h    << endl;
+
+   cout << "&: " << Rand << endl;
+   cout << "|: " << Ror  << endl; 
+   cout << "^: " << Rxor << endl; 
+   
 
 
-//   cout << "Test constructor with 40 bits:" << endl;
-//   fast_dynamic_bitset g(40);
-//   cout << g << endl;
 
-//   test_set(g,0);
-//   test_set(g,2);
-//   test_set(g,5);
-//   test_set(g,7);
-
-//   cout << "set 13, 31 32, 39, reset 2" << endl;
-//   g.set(13,1);
-//   g.set(31,1);
-//   g.set(32,1);
-//   g.set(39,1);
-//   g.set(2,0);
-//   cout << g << endl;
 
 //   cout << "testing count :";
 //   cout << g.count() << endl;
@@ -193,18 +265,26 @@ int main()
 //   cout << (a != b ? "a != b: true" : "a != b: false") << endl;
 
 
-  map<fast_dynamic_bitset, unsigned> testmap;
+//   map<fast_dynamic_bitset, unsigned> testmap;
 
 
-  {
-    fast_dynamic_bitset a(4);
-    fast_dynamic_bitset b(4);
-    fast_dynamic_bitset c(4);
+//   {
+//     fast_dynamic_bitset a(4);
+//     fast_dynamic_bitset b(4);
+//     fast_dynamic_bitset c(4);
 
-    testmap[a] = 1;
-    testmap[b] = 2;
-    testmap[c] = 3;
-  }
+//     testmap[a] = 1;
+//     testmap[b] = 2;
+//     testmap[c] = 3;
+//   }   
+}
+
+
+int main()
+{
+  test_basic();
+
+
 
 
 }

@@ -133,7 +133,7 @@ class CSplit
   {
     return split.none();
   }
-
+  
   void print(std::ostream& os) const
   {
     os << split;
