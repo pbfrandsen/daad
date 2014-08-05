@@ -14,6 +14,9 @@
 #include <map>
 #include <vector>
 #include <iterator>
+#include <cstdlib>
+#include <numeric>
+#include "../kmeans.h"
 
 using namespace std;
 
@@ -46,7 +49,6 @@ CSequences2 read_fasta_file(int type, const char *fn )
     
     return *seqs;
 }
-
 
 /* This main function is for when using bitsets */
 int main(int argc, const char ** argv)
@@ -107,7 +109,10 @@ int main(int argc, const char ** argv)
         }
         copy(site_rates.begin(), site_rates.end(), ostream_iterator<double>(cout, "\n"));
         cout << endl;
-        
+        vector <int> cluster_assigns;
+        cluster_assigns = kmeans(site_rates, 2);
+        copy(cluster_assigns.begin(), cluster_assigns.end(), ostream_iterator<int>(cout, ","));
+        cout << endl;
     }
     else if (data_type == "protein")
         CSequences2 sequences = read_fasta_file(2, filename.c_str());

@@ -25,6 +25,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		17CBD2011991158700A4273B /* kmeans.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = kmeans.h; sourceTree = SOURCE_ROOT; };
 		17DA1EE319657900007735F3 /* DAAD_project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = DAAD_project; sourceTree = BUILT_PRODUCTS_DIR; };
 		17DA1EE619657900007735F3 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		17DA1EE819657900007735F3 /* DAAD_project.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = DAAD_project.1; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				17DA1EE619657900007735F3 /* main.cpp */,
+				17CBD2011991158700A4273B /* kmeans.h */,
 				17DA1EE819657900007735F3 /* DAAD_project.1 */,
 			);
 			path = DAAD_project;
@@ -227,6 +229,7 @@
 				17DA1EEE19657900007735F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
