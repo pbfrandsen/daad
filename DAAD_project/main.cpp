@@ -107,10 +107,10 @@ int main(int argc, const char ** argv)
             }
             site_rates[i] = (pa_sum/(alignment_length - 1));
         }
-        copy(site_rates.begin(), site_rates.end(), ostream_iterator<double>(cout, "\n"));
-        cout << endl;
+//        copy(site_rates.begin(), site_rates.end(), ostream_iterator<double>(cout, "\n"));
+//        cout << endl;
         vector <int> cluster_assigns;
-        cluster_assigns = kmeans(site_rates, 2);
+        cluster_assigns = kmeans(site_rates, 8);
         copy(cluster_assigns.begin(), cluster_assigns.end(), ostream_iterator<int>(cout, ","));
         cout << endl;
     }

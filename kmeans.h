@@ -15,6 +15,24 @@
 #include <cstdlib>
 #include <numeric>
 
+// This function will look at two vectors of doubles and see if they contain any pair
+// that differs by more than 0.00001
+bool close_enough(std::vector<double> first, std::vector<double> second)
+{
+    int length = first.size();
+    int i;
+    double difference;
+    for (i = 0; i < length; ++i)
+    {
+        difference = fabs(first[i] - second[i]);
+        if (fabs(first[i] - second[i]) > 0.00001)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 std::vector<int> kmeans(std::vector<double> site_rates, int num_k)
 {
     int site;
@@ -37,48 +55,52 @@ std::vector<int> kmeans(std::vector<double> site_rates, int num_k)
         random_number = (std::rand()/(RAND_MAX + 1.0));
         if (random_number > 0.001)
         {
-            ks.push_back(random_number);
-            std::cout << "Here is your random number: " << random_number << std::endl;
+            new_ks.push_back(random_number);
+            ks.push_back(1.0);
+//            std::cout << "Here is your random number: " << random_number << std::endl;
             centroid_map[k];
         }
         else
             --k;
     }
-    while ((!(ks == new_ks)) && (num_iterations < 5))
+    // Run this loop until centroids don't change, or until there is some maximum number of iterations
+    while ((!close_enough(ks, new_ks)) && (num_iterations < 35))
     {
+        // If the centroids do change, set the ks to the new_ks
         ks = new_ks;
+        new_ks.clear();
         k_assigns.clear();
         for (site = 0; site < site_rates.size(); ++site)
         {
-            std::cout << "On site number " << site << std::endl;
             for (k = 0; k < num_k; ++k)
             {
-                std::cout << "Calculating distance..." << std::endl;
-                distance = abs(site_rates[site] - ks[k]);
+                distance = fabs(double(site_rates[site]) - ks[k]);
                 if (distance < current_best)
                 {
                     current_best = distance;
                     best_k = k;
                 }
             }
-            std::cout << "Best k is: " << best_k << std::endl;
             centroid_map[best_k].push_back(site_rates[site]);
             k_assigns.push_back(best_k);
+            current_best = 1;
         }
-        std::cout << "Calculating new centroids..." << std::endl;
         for (k = 0; k < num_k; ++k)
         {
             sum = std::accumulate(centroid_map[k].begin(),centroid_map[k].end(),0.0);
             mean = sum / centroid_map[k].size();
             new_ks.push_back(mean);
-            std::cout << "New centroid numba " << k << ": " << mean << std::endl;
         }
-        std::cout << "Finished iteration: " << num_iterations << std::endl;
         ++num_iterations;
         centroid_map.clear();
-        std::cout << "Current cluster assignments..." << std::endl;
-        copy(k_assigns.begin(), k_assigns.end(), std::ostream_iterator<int>(std::cout, ","));
-        std::cout << std::endl;
+        for (k = 0; k < new_ks.size(); ++k)
+        {
+            std::cout << "Centroid " << (k + 1) << " is " << new_ks[k] << std::endl;
+        }
+    }
+    for (k = 0; k < ks.size(); ++k)
+    {
+        std::cout << "Centroid " << (k + 1) << " is " << ks[k] << std::endl;
     }
     return k_assigns;
 }
