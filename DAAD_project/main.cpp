@@ -17,6 +17,7 @@
 #include <cstdlib>
 #include <numeric>
 #include "../kmeans.h"
+#include "../sp_container.h"
 
 using namespace std;
 
@@ -71,10 +72,11 @@ int main(int argc, const char ** argv)
         unsigned alignment_length = sequences.GetPosNum();
         
         vector<faststring> seq_patterns;
-        vector<SitePattern> all_patterns;
+        vector<SitePattern> all_patterns(alignment_length);
         
         seq_patterns.reserve(alignment_length);
-        all_patterns.reserve(alignment_length);
+        
+        cout << "All patterns size: " << all_patterns.size() << endl;
         // TODO: Use reference for this rather than making a copy
         seq_patterns = sequences.get_pattern_vec();
         
@@ -91,6 +93,8 @@ int main(int argc, const char ** argv)
             site_partition = temp.gen_pattern_bitsets();
             all_patterns[i] = (temp);
         }
+        
+        cout << "All patterns size: " << all_patterns.size() << endl;
 
         
         double pa_sum;
@@ -110,7 +114,7 @@ int main(int argc, const char ** argv)
 //        copy(site_rates.begin(), site_rates.end(), ostream_iterator<double>(cout, "\n"));
 //        cout << endl;
         vector <int> cluster_assigns;
-        cluster_assigns = kmeans(site_rates, 8);
+        cluster_assigns = kmeans(site_rates, 4);
         copy(cluster_assigns.begin(), cluster_assigns.end(), ostream_iterator<int>(cout, ","));
         cout << endl;
     }

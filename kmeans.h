@@ -15,6 +15,48 @@
 #include <cstdlib>
 #include <numeric>
 
+// This function will identify the best initial seeds
+//std::vector<double> initial_ks(std::vector<double> site_rates, int num_k)
+//{
+//    int site;
+//    int k;
+//    double random_number;
+//    int num_iterations = 0;
+//    std::vector<double> ks;
+//    std::map <int, std::vector<double> > centroid_map;
+//    std::vector<double> new_ks;
+//    double current_best = 1.0;
+//    double distance;
+//    int best_k = 1;
+//    
+//    int iter;
+//    for (iter = 0; iter < 100; ++iter)
+//    {
+//        random_number = (std::rand()/(RAND_MAX + 1.0));
+//        new_ks.push_back(random_number);
+//        ks.push_back(1.0);
+//        std::cout << "Here is intitial centroid: " << (k + 1) << " " << random_number << std::endl;
+//        centroid_map[k];
+//    }
+//    
+//    for (site = 0; site < site_rates.size(); ++site)
+//    {
+//        for (k = 0; k < num_k; ++k)
+//        {
+//            distance = fabs(double(site_rates[site]) - ks[k]);
+//            if (distance < current_best)
+//            {
+//                current_best = distance;
+//                best_k = k;
+//            }
+//        }
+//        centroid_map[best_k].push_back(site_rates[site]);
+//        k_assigns.push_back(best_k);
+//        current_best = 1;
+//        
+//    }
+//}
+
 // This function will look at two vectors of doubles and see if they contain any pair
 // that differs by more than 0.00001
 bool close_enough(std::vector<double> first, std::vector<double> second)
@@ -53,15 +95,10 @@ std::vector<int> kmeans(std::vector<double> site_rates, int num_k)
     for (k = 0; k < num_k; ++k)
     {
         random_number = (std::rand()/(RAND_MAX + 1.0));
-        if (random_number > 0.001)
-        {
-            new_ks.push_back(random_number);
-            ks.push_back(1.0);
-//            std::cout << "Here is your random number: " << random_number << std::endl;
-            centroid_map[k];
-        }
-        else
-            --k;
+        new_ks.push_back(random_number);
+        ks.push_back(1.0);
+        std::cout << "Here is intitial centroid: " << (k + 1) << " " << random_number << std::endl;
+        centroid_map[k];
     }
     // Run this loop until centroids don't change, or until there is some maximum number of iterations
     while ((!close_enough(ks, new_ks)) && (num_iterations < 35))
