@@ -91,6 +91,7 @@ int main(int argc, const char ** argv)
         {
             temp.reset_pattern(seq_patterns[i]);
             site_partition = temp.gen_pattern_bitsets();
+            // Define a container object first, then use add function to add site patterns. Call the add function and the add function will call the pushback
             all_patterns[i] = (temp);
         }
         

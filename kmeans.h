@@ -107,6 +107,7 @@ std::vector<int> kmeans(std::vector<double> site_rates, int num_k)
         ks = new_ks;
         new_ks.clear();
         k_assigns.clear();
+        
         for (site = 0; site < site_rates.size(); ++site)
         {
             for (k = 0; k < num_k; ++k)
@@ -124,9 +125,16 @@ std::vector<int> kmeans(std::vector<double> site_rates, int num_k)
         }
         for (k = 0; k < num_k; ++k)
         {
-            sum = std::accumulate(centroid_map[k].begin(),centroid_map[k].end(),0.0);
-            mean = sum / centroid_map[k].size();
-            new_ks.push_back(mean);
+            if (centroid_map[k].size() == 0)
+            {
+                
+            }
+            else
+            {
+                sum = std::accumulate(centroid_map[k].begin(),centroid_map[k].end(),0.0);
+                mean = sum / centroid_map[k].size();
+                new_ks.push_back(mean);
+            }
         }
         ++num_iterations;
         centroid_map.clear();

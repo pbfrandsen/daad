@@ -220,10 +220,28 @@ private:
 
 
 public:
+  // Minimal constructor: Empty sequences object
   CSequences2(CSequence_Mol::DataTypesEnum Dt):
   datatype(Dt), taxaNum(0), ambig_char('?'), originalPosNumbers_supplied(false),posNum(0)
 
   {}
+
+  // Constructor for a set of empty sequences with names and length.
+ CSequences2(CSequence_Mol::DataTypesEnum Dt, std::vector<faststring> names, unsigned len):
+  datatype(Dt), taxaNum(names.size()), ambig_char('?'), originalPosNumbers_supplied(false),posNum(0)
+
+  {
+    seqData.reserve(taxaNum);
+    unsigned        i;
+    CSequence_Mol   *seq;
+
+    for (i=0; i<taxaNum; ++i)
+    {
+      seq = new CSequence_Mol (CSequence_Mol::dna, names[i], len, ambig_char);
+      add_seq(seq);
+    }
+  }
+
 
   ~CSequences2()
   {
@@ -255,7 +273,7 @@ public:
     for (i=0; i<n; ++i)
     {
       seq = new CSequence_Mol ( *(s.seqData[i]), pos1, pos2);
-      seqData.push_back(seq);
+      add_seq(seq);
     }
     if (i != n)
     {
@@ -2249,6 +2267,25 @@ public:
        posNum = seqData[0]->length();
    }
 
+   void append_to_sequences(const faststring &site_pattern)
+   {
+     unsigned i;
+
+     if ( taxaNum != site_pattern.size() )
+     {
+       std::cerr << "Error when calling the append_to_sequences method:\n"
+	            "the number of sites in the pattern that shall be\n"
+                    "appended the sequences ofject differs from the\n"
+	            "number of sequences. This pattern will not be appended." << std::endl; 
+       exit(-22);
+     }
+     for (i=0; i<taxaNum; ++i)
+     {
+       seqData[i]->append_residue_unchecked(site_pattern[i]);
+     }
+     ++posNum;
+   }
+
 
    bool is_insertion_column(unsigned col_pos)
    {
@@ -2490,7 +2527,7 @@ public:
    //  Allowed flag values:
    // 0: normal mode
    // 1: Gap regions always get a distance of -3
-
+   // The result is in the range from 0..1.
    double sequence_distance(unsigned s1, unsigned s2, unsigned begin_range, unsigned end_range, unsigned flag=0)
    {
      unsigned i = begin_range;
@@ -2552,6 +2589,11 @@ public:
      return (double)diff / (double)len;
    }
 
+
+   // Currently only implemented for datatype DNA
+   //  Allowed flag values:
+   // 0: normal mode.
+   // 1: Gap regions always get a distance of -3.
    void get_sequences_distances(unsigned begin_range, unsigned end_range, void (*call_back_distance)(short, short, double), unsigned flag=0)
    {
      // Compute all pairwise distances:
@@ -2569,6 +2611,40 @@ public:
      }
    }
 
+   // Same as above, but for some distances, those that have a false value in vector
+   // we assign an invalidly large value to the distance.
+   // Here a value of 100 is assigned to those distances
+   void get_sequences_distances(unsigned begin_range, unsigned end_range, void (*call_back_distance)(short, short, double), const std::vector<bool> &sequences_valid, unsigned flag=0)
+   {
+     // Compute all pairwise distances:
+     unsigned N = taxaNum;
+     unsigned i, j;
+     double dist;
+     
+     if (sequences_valid.size() != N)
+     {
+       std::cerr << "Critical internal error: In function get_sequences_distances the size of the vector sequences_valid must be equal to the number of sequences in the sequences object." << std::endl;
+       exit(-3);
+     }
+
+     for (i=0; i<N; ++i)
+     {
+       for (j=i+1; j<N; ++j)
+       {
+	 if (!sequences_valid[i] || !sequences_valid[j])
+	 {
+	   dist = 100;
+	 }
+	 else
+	 {
+	   dist = sequence_distance(i, j, begin_range, end_range, flag);
+	 }
+	 call_back_distance(i,j,dist);
+       }
+     }
+   }
+
+
    CSequence_Mol* get_sequence_with_sequence_name_match(faststring &partial_name)
    {
      unsigned i;
@@ -2582,34 +2658,19 @@ public:
      }
      return NULL;
    }
-
-    std::vector<faststring> get_pattern_vec()
-    {
-        std::vector<faststring> pattern_vec(posNum);
-        
-        unsigned i, j;
-        const char **tax = new const char* [taxaNum];
-        
-        for (j=0; j < taxaNum; ++j)
-        {
-            tax[j] = seqData[j]->getSeqStr();
-        }
-        
-        faststring tmp;
-        
-        for (i=0; i<posNum; ++i)
-        {
-            tmp.clear();
-            
-            for (j=0; j < taxaNum; ++j)
-            {
-                tmp.push_back(tax[j][i]);
-            }
-            pattern_vec[i] = tmp;
-        }
-        return pattern_vec;
-    }
    
+   void get_alignment_as_copy(std::vector<faststring> &v)
+   {
+     v.clear();
+     v.reserve(taxaNum+1);
+
+     unsigned i;
+     for (i=0; i<taxaNum; ++i)
+     {
+       v.push_back(seqData[i]->getSeq_faststring());
+       v[i].c_str();  // Make buffer 0-teminated.
+     }
+   }
 
 };
 

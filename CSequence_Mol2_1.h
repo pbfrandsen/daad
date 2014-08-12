@@ -865,6 +865,27 @@ class CSequence_Mol
     reset_numbers_of_residues();
   }
 
+
+ CSequence_Mol(DataTypesEnum dt, faststring name, unsigned len, char p_general_ambig = '\0'):
+  full_name(name),type(dt), general_ambig(p_general_ambig),
+    numbers_of_residues_computed(false), bitcode_recoded(false)
+  {
+    if (len < -1u)
+      ++len;
+    data.reserve(len);
+
+    find_shortname_and_description();
+
+    if (p_general_ambig == '\0') // Use the typical ambig character
+    {
+      if      (dt == dna)     general_ambig = 'N';
+      else if (dt == protein) general_ambig = 'X';
+      else                    general_ambig = '?';
+    }
+    reset_numbers_of_residues();
+  }
+
+
   //**************************************************************************
   // pos1 must be the first column starting with 0.
   // pos2 must be the index after the last column.
@@ -1108,6 +1129,11 @@ class CSequence_Mol
   const faststring& getName_faststring() const
   {
     return short_name;
+  }
+
+  const faststring& getSeq_faststring() const
+  {
+    return data;
   }
 
   faststring getPhylipName()
@@ -1454,6 +1480,10 @@ class CSequence_Mol
     data.append(s.data);
   }
 
+  void append_residue_unchecked(char c)
+  {
+    data.push_back(c);
+  }
 
   void writeSequence_fill_in_gaps_and_stars(FILE *of, unsigned char_per_line=50)
   {
@@ -2482,6 +2512,13 @@ class CSequence_Mol
     return number_of_Ns;
   }
 
+  unsigned get_number_of_gaps()
+  {
+    if (!numbers_of_residues_computed)
+      compute_numbers_of_residues();
+    return number_of_gaps;
+  }
+
   unsigned get_number_raw_original_length()
   {
     if (!numbers_of_residues_computed)
@@ -2516,7 +2553,39 @@ class CSequence_Mol
 
     return ((double) number_CG)/(number_of_DNARNA_bases);
   }
-  
+
+
+  bool range_contains_gaps_or_Ns(unsigned pos1, unsigned pos2)
+  {
+    unsigned len = length();
+
+    if (pos1 >= pos2 || pos1 > len) // Empty range
+      return false;
+    if (pos2 > len)
+      pos2 = len;
+
+    const char *p1, *p2;
+    p1 = getSeqBegin() + pos1;
+    p2 = getSeqBegin() + pos2;
+
+    char c='\0';
+
+    while (p1 != p2)
+    {
+      c = *p1;
+      if (c == 'N' || c == 'n' || c == '-')
+	break;
+      ++p1;
+    }
+    if (c == 'N' || c == 'n' || c == '-')      
+      return true;
+    else
+      return false;
+  }
+
+
+
+
 
   // void readFastaSequence(CFile& infile) is depricated:
   // Use one of the other read functions below.
