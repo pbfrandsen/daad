@@ -120,6 +120,27 @@ public:
                 split_T.set(i);
 //                std::cout << "set as T" << std::endl;
             }
+            else if (pattern[i] == '-')
+            {
+                split_A.set(i);
+                split_C.set(i);
+                split_G.set(i);
+                split_T.set(i);
+            }
+            else if (pattern[i] == 'N')
+            {
+                split_A.set(i);
+                split_C.set(i);
+                split_G.set(i);
+                split_T.set(i);
+            }
+            else if (pattern[i] == 'n')
+            {
+                split_A.set(i);
+                split_C.set(i);
+                split_G.set(i);
+                split_T.set(i);
+            }
         }
         
         // Check if site is full of ambig characters, if it is, flag it as empty

@@ -2671,6 +2671,33 @@ public:
        v[i].c_str();  // Make buffer 0-teminated.
      }
    }
+    
+    std::vector<faststring> get_pattern_vec()
+    {
+        std::vector<faststring> pattern_vec(posNum);
+        
+        unsigned i, j;
+        const char **tax = new const char* [taxaNum];
+        
+        for (j=0; j < taxaNum; ++j)
+        {
+            tax[j] = seqData[j]->getSeqStr();
+        }
+        
+        faststring tmp;
+        
+        for (i=0; i<posNum; ++i)
+        {
+            tmp.clear();
+            
+            for (j=0; j < taxaNum; ++j)
+            {
+                tmp.push_back(tax[j][i]);
+            }
+            pattern_vec[i] = tmp;
+        }
+        return pattern_vec;
+    }
 
 };
 

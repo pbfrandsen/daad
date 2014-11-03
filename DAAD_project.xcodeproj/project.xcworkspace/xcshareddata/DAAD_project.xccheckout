@@ -10,29 +10,29 @@
 	<string>DAAD_project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>F06BF16B-D9EC-4793-930A-65422C5D6497</key>
+		<key>809FDA1F5299ABAC6D2DEAF13787E5C2CCF3885C</key>
 		<string>https://github.com/pbfrandsen/daad.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>DAAD_project.xcodeproj/project.xcworkspace</string>
+	<string>DAAD_project.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F06BF16B-D9EC-4793-930A-65422C5D6497</key>
+		<key>809FDA1F5299ABAC6D2DEAF13787E5C2CCF3885C</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/pbfrandsen/daad.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F06BF16B-D9EC-4793-930A-65422C5D6497</string>
+	<string>809FDA1F5299ABAC6D2DEAF13787E5C2CCF3885C</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F06BF16B-D9EC-4793-930A-65422C5D6497</string>
+			<string>809FDA1F5299ABAC6D2DEAF13787E5C2CCF3885C</string>
 			<key>IDESourceControlWCCName</key>
 			<string>daad</string>
 		</dict>

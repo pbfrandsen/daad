@@ -10,16 +10,16 @@
 #define _sp_container_h
 
 #include "faststring2.h"
-#include "CSplit.h"
+#include "CSplit2.h"
 #include "site_pattern.h"
 
-class SPContainer
-{
-    std::vector<SitePattern> vector_of_site_patterns;
-    
-public:
-    SPContainer(std::vector<faststring> vector_of_site_patterns)
-    
-};
+//class SPContainer
+//{
+//    std::vector<SitePattern> vector_of_site_patterns;
+//    
+//public:
+//    SPContainer(std::vector<faststring> vector_of_site_patterns);
+//    
+//};
 
 #endif
