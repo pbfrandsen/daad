@@ -1,6 +1,6 @@
 daad
 ====
-This software will calculate the TIGER site rates (http://dx.doi.org/10.1093/sysbio/syr064) of a multiple sequence alignment.
+This software will calculate the TIGER site rates (http://dx.doi.org/10.1093/sysbio/syr064) for a multiple sequence alignment.
 
 The software has only been tested and compiled on a MAC using the clang++ compiler. It is recommended that you use clang++ to ensure that the software compiles successfully. The easiest way to do this is by downloading XCODE.
 
